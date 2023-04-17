@@ -11,9 +11,6 @@ public class RealDatabase implements Database {
     MongoDatabase db = this.mongo.getDatabase("gameData");
     MongoCollection<Document> scoresCollection = db.getCollection("scores");
 
-    /**
-     * Stores the score for a player. If the player already has it score, it is overwritten with this new value
-     */
     public void recordScore(String player, int score) {
         if(this.getPlayerScore(player) > 0){
             Document document = new Document();
@@ -30,9 +27,6 @@ public class RealDatabase implements Database {
         }
     }
 
-    /**
-     * Returns the score for the given player
-     */
     public int getPlayerScore(String player) {
         Document query = new Document();
         query.put("name", player);
@@ -46,9 +40,6 @@ public class RealDatabase implements Database {
         return 0;
     }
 
-    /**
-     * Returns a list of a players who have a recorded score
-     */
     public ArrayList<String> getPlayerList() {
         ArrayList<String> players = new ArrayList<>();
         FindIterable<Document> cursor = this.scoresCollection.find();
